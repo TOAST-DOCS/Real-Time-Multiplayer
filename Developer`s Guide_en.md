@@ -23,7 +23,7 @@ Inspector
 
 NetworkManager inspector as follows.
 
-<img src="media/image1.jpg" width="96" height="96" />
+<img src="http://static.toastoven.net/prod_realtimemultiplayer/img_27.jpg" />
 
 | Term                         | Description                                                                                                                                                                                                                                                                                                                               |
 |------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -104,7 +104,7 @@ NetworkManager has a function to notify status information in three categories. 
 
 Creating game objects dynamically in a multiplayer game is one of necessary functions. Game objects can be created dynamically by registering Prefab to be created in NetworkManager before connecting to the network. To register in NetworkManager, the applicable game object must include NetworkIdentity component.
 
-<img src="media/image2.jpg" width="96" height="96" />
+<img src="http://static.toastoven.net/prod_realtimemultiplayer/img_28.jpg" />
 
 Registered prefab can be created dynamically by calling API provided by RealtimeNetwork as follows.
 
@@ -300,7 +300,7 @@ NetworkIdentity is the unique identifier of an applicable game object on the net
 
 NetworkIdentity inspector as follows.
 
-<img src="media/image3.jpg" width="96" height="96" />
+<img src="http://static.toastoven.net/prod_realtimemultiplayer/img_29.jpg" />
 
 | Inspector              | Description                                                                                                                                                                                               |
 |------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -325,7 +325,7 @@ To use NetworkTransform component, NetworkIdentity component must be included in
 
 NetworkManager inspector as follows.
 
-<img src="media/image4.jpg" width="96" height="96" />
+<img src="http://static.toastoven.net/prod_realtimemultiplayer/img_30.jpg" />
 
 | Inspector                   | Description                                                                                                                                                                                                                                |
 |-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
