@@ -7,7 +7,7 @@ NetworkManager는 멀티플레이어 게임을 위한 네트워크 기능을 제
 - 게임 상태 관리
 - 게임 오브젝트 생성 관리
 - 씬 관리
-- 디버깅 레벨 설정
+- 로그 레벨 설정
 - 매치 메이킹
 - 네트워크 접속 설정
 
@@ -20,13 +20,13 @@ NetworkManager 인스펙터는 다음과 같다.
 |용어|	설명|
 |---|---|
 |Don’t Destroy On Load|	새로운 씬이 로드될 때 NetworkManager 컴포넌트가 포함된 게임 오브젝트가 파괴되지 않도록 지정한다.|
-|Log Level|	NetworkManager 컴포넌트의 디버깅 레벨을 지정한다.|
-|Online Scene|	플레이어가 게임 룸에 참가했을 때 호출되는 씬을 지정한다.|
-|Offline Scene|	플레이어가 룸을 떠나거나 네트워크 접속이 종료될 때 호출되는 씬을 지정한다.|
+|Log Level|	NetworkManager 컴포넌트의 로그 레벨을 지정한다.|
+|Online Scene|	플레이어가 게임 룸에 참가했을 때 호출되는 씬을 지정한다. 빌드세팅에 등록된 씬만 등록가능하다. |
+|Offline Scene|	플레이어가 룸을 떠나거나 네트워크 접속이 종료될 때 호출되는 씬을 지정한다. 빌드세팅에 등록된 씬만 등록가능하다. |
 |Listener|	NetworkManager의 상태 변화를 공지하기 위한 필드다. 게임 오브젝트에 이벤트 공지를 수신할 스크립트를 작성해서 지정하면 된다. <br/> - void OnConnected() : 네트워크 연결 성공 <br/> - void OnFailedToConnect() : 네트워크 연결 실패 <br/> - void OnDisconnected() : 네트워크 연결 종료 <br/> - void OnJoinedGame() : 게임 룸 참가|
 |Appkey|	TOAST Cloud에서 발급받은 Appkey을 입력한다.|
 |Url|	TOAST Cloud에서 발급받은 URL을 입력한다.|
-|Max Player|	룸을 생성 때 최대 수용 인원을 지정한다.|
+|Max Player|	룸의 최대 수용 인원을 지정한다.|
 |RoomType|	입력한 문자열과 같은 경우에 매칭을 수행한다.|
 |Reopen|	게임 진행 중에 결원이 발생할 경우, 추가 참가자를 게임에 참가할 수 있도록 지정한다.|
 |Spawn Info|	게임 룸 안에서 동적으로 생성할 게임오브젝트를 등록한다.|
@@ -61,7 +61,7 @@ MORPG와 같이 플레이어가 특정 던전을 선택해서 입장할 경우, 
 
 ### 리스너 설정
 
-NetworkManager는 상태 정보를 세 가지로 구분하여 공지하는 기능을 가지고 있다. TOAST Cloud에 접속한 Connected 상태, 인증 과정을 거처 게임 룸에 진입한 JoinedGame 상태, 마지막으로 연결이 종료된 Disconnected 상태다. 상태 변화에 따라 필요한 동작이 필요하다면 게임 오브젝트에 다음과 같이 스크립트를 작성해 NetworkManager의 인스펙터의 Listener 항목에 드래그하면 된다.
+NetworkManager는 상태 정보를 세 가지로 구분하여 공지하는 기능을 가지고 있다. TOAST Cloud에 접속한 Connected 상태, 인증 과정을 거처 게임 룸에 진입한 JoinedGame 상태, 마지막으로 연결이 종료된 Disconnected 상태다. 상태 변화에 따라 필요한 동작이 필요하다면 게임 오브젝트에 다음과 같이 스크립트를 작성해 NetworkManager의 인스펙터의 Listener 항목에 드래그하면 된다. 상태 정보를 받을 필요가 없다면 리스너를 설정하지 않아도 된다.
 
 ```
 public class Listener : MonoBehaviour {
@@ -110,7 +110,7 @@ RealtimeNetwork.Instantiate (playerPrefab, position, rotation);
 
 ### 멀티플랙싱
 
-멀티플랙싱은 도메인이 다른 데이터 간의 종속성을 제거하여 불필요한 데이터 지연 방지하는 방법이다. 예를 들면, A 데이터와 B 데이터가 Reliable Sequenced QoS로 지정되어 있고 서로 종속성을 가지고 있지 않다면 A 데이터의 유실이 B 데이터 지연을 초래하지 않는 것이 좋다. 이런 불필요한 지연을 막기 위해 종속 관계가 없는 각 도메인에 개별 채널을 할당하여 사용하는 것이 바람직하다.
+멀티플랙싱은 도메인이 다른 데이터 간의 종속성을 제거하여 불필요한 데이터 지연을 방지하는 방법이다. 예를 들면, A 데이터와 B 데이터가 Reliable Sequenced QoS로 지정되어 있고 서로 종속성을 가지고 있지 않다면 A 데이터의 유실이 B 데이터 지연을 초래하지 않는 것이 좋다. 이런 불필요한 지연을 막기 위해 종속 관계가 없는 각 도메인에 개별 채널을 할당하여 사용하는 것이 바람직하다.
 
 NetworkManager의 Channel Count는 사용할 최대 채널 개수를 지정한다. 지정 가능 범위는 최소 5개부터 최대 50까지 사용 가능하며 영 번째와 첫 번째 채널은 내부적인 데이터를 위한 채널로 사용하기 때문에 사용을 지양하는 것이 좋다.
 
@@ -150,7 +150,7 @@ MTU 크기 변경은 서비스 중인 나라 혹은 지역의 네트워크 인�
 |LocalPlayer|	Player|	게임 룸에서 공유되는 로컬 플레이어의 정보입니다.|
 |IsMaster|	bool|	현재 플레이어가 마스터 권한을 가지고 있으면 True를 반환하고 그렇지 않을 경우 false를 반환한다.|
 |dontDestroyOnLoad|	bool|	NetworkManager가 포함된 게임 오브젝트가 씬이 변경될 때, 파괴되지 않도록 설정한다.|
-|ServerAddress|	string|	접속한 게임 서버의 주소를 반환한다.|
+|ServerAddress|	string|	접속한 게임 서버의 주소를 반환한다. 2.0 이상에선 도메인으로 표현된다.|
 |ServerPort|	int|	접속한 게임 서버의 포트 번호를 반환한다.|
 |MaxPlayer|	int|	게임 룸의 최대 플레이어를 나타낸다. 최대 인원은 8명이다.|
 |RoomType|	string|	접속할 게임 룸의 종류를 지정한다.|
@@ -260,9 +260,9 @@ RealtimeNetwork는 정적 함수와 정적 프로퍼티를 제공한다. Realtim
 |용어|설명|
 |---|---|
 |Description|	네트워크상에 RPC 메시지를 송신한다.|
-|Signature|	bool RPC(NetworkIdentity identity, string methodName, RpcType type, ReceiverGroup receiverGroup, DataObject parameters, SendParameters sendParameters)|
-|Signature|bool RPC(NetworkIdentity identity, string methodName, RpcType type, byte player, DataObject parameters, SendParameters sendParameters)|
-|Signature|bool RPC(NetworkIdentity identity, string methodName, RpcType type, byte[] players, DataObject parameters, SendParameters sendParameters)|
+|Signature|	bool RPC(NetworkIdentity identity, string methodName, RpcType type, ReceiverGroup receiverGroup, DataObject parameters, SendOptions sendOptions)|
+|Signature|bool RPC(NetworkIdentity identity, string methodName, RpcType type, byte player, DataObject parameters, SendOptions sendOptions)|
+|Signature|bool RPC(NetworkIdentity identity, string methodName, RpcType type, byte[] players, DataObject parameters, SendOptions sendOptions)|
 |Parameters|	identity	메시지를 송신할 게임 오브젝트의 NetworkIdentity를 지정한다.|
 |Parameters|methodName	메시지를 수신할 함수 이름|
 |Parameters|type	메시지 타입을 지정한다. RpcType의 Ephemeral 또는 Persistent|
@@ -270,13 +270,13 @@ RealtimeNetwork는 정적 함수와 정적 프로퍼티를 제공한다. Realtim
 |Parameters|player	메시지를 수신할 플레이어 아이디를 지정한다.|
 |Parameters|players	메시지를 수신할 플레이어의 아이디를 배열 형태로 지정한다.|
 |Parameters|parameters	메시지 수신 시 함수의 인자로 전달된다.|
-|Parameters|sendParameters	메시지 송신 옵션을 지정한다.|
+|Parameters|sendOptions	메시지 송신 옵션을 지정한다.|
 |Return Value|	bool	송신에 성공하면 true를 반환하고 그렇지 않으면 false를 반환한다.|
 
 |용어|설명|
 |---|---|
 |Description|	Persistent로 지정된 RPC 메시지를 삭제한다.|
-|Signature|	bool RemoveRPC(NetworkIdentity identity, string methodName, SendParameters sendParameters)|
+|Signature|	bool RemoveRPC(NetworkIdentity identity, string methodName, SendOptions sendOptions)|
 |Parameters|	identity	삭제할 RPC의 NetworkIdentity를 지정한다.|
 |Parameters|methodName	삭제할 RPC의 함수 이름을 지정한다.|
 |Return Value|	bool	송신에 성공하면 true를 반환하고 그렇지 않으면 false를 반환한다.|
@@ -405,9 +405,9 @@ NetworkBehaviour의 API는 현재 게임 오브젝트의 소유권과 관련된 
 |API Properties|타입| 설명|
 |---|---|---|
 |IsLocalPlayerGameObject|	bool|	게임 오브젝트가 로컬 플레이어 소유인지를 나타낸다.|
-|hasAuthority|	bool|	해당 게임 오브젝트에 대한 소유권을 가지고 있는지 확인한다.|
+|HasAuthority|	bool|	해당 게임 오브젝트에 대한 소유권을 가지고 있는지 확인한다.|
 |DirtyBit|	bool|	True로 지정하면 OnSerialize함수가 호출되어 데이터가 송신된다. 송신 후, 자동으로 False로 변경된다.|
-|networkIdentity|	NetworkIdentity|	현재 게임 오브젝트에 포함된 NetworkIdentity 컴포넌트를 반환한다.|
+|NetworkIdentity|	NetworkIdentity|	현재 게임 오브젝트에 포함된 NetworkIdentity 컴포넌트를 반환한다.|
 
 [Methods]
 
@@ -451,7 +451,7 @@ NetworkBehaviour의 API는 현재 게임 오브젝트의 소유권과 관련된 
 
 |API Methods| 설명|
 |---|---|
-|Description|	가상 함수로 OnSerialize 송신 데이터의 네트워크 QoS를 지정한다. 오버라이딩을 통해 송신 간격을 변경할 수 있다.|
+|Description|	가상 함수로 OnSerialize 송신 데이터의 네트워크 QoS를 지정한다. 오버라이딩을 통해 네트워크 QoS를 변경할 수 있다.|
 |Signature|	QosType GetQoS()|
 |Return Value|	QosType	지정된 QoS를 반환한다.|
 
@@ -628,10 +628,10 @@ GameState는 게임 상태를 나타낸다.
 
 |GameState 용어| 설명|
 |---|---|
-|CONNECT_ESTABLISHED|	네트워크 연결 성립|
-|AUTH|	인증 성공|
-|JOINGAME|	게임 참여|
-|LEAVEGAME|	게임 떠남|
+|ConnectEstablished|	네트워크 연결 성립|
+|Auth|	인증 성공|
+|JoinGame|	게임 참여|
+|LeaveGame|	게임 떠남|
 
 ### NetStates
 
@@ -639,10 +639,10 @@ GameState는 게임 상태를 나타낸다.
 
 |NetStates 용어| 설명|
 |---|---|
-|DISCONNECTED|	네트워크 연결 종료|
-|DISCONNECTING|	네트워크 연결 종류 중|
-|CONNECTING|	네트워크 연결 중|
-|CONNECTED|	네트워크 연결 됨|
+|Disconnected|	네트워크 연결 종료|
+|Disconnecting|	네트워크 연결 종류 중|
+|Connecting|	네트워크 연결 중|
+|Connected|	네트워크 연결 됨|
 
 ### TransformSyncMode
 
@@ -684,16 +684,16 @@ Player 클래스는 플레이어의 정보를 참조하기 위해 사용된다.
 |PlayerNr|	byte|	플레이어의 고유 번호를 반환한다.|
 |Properties|	DataObject|	TBD|
 
-### SendParameters
+### SendOptions
 
-SendParameters는 RPC 데이터를 송신 시, 송신 옵션으로 사용된다.
+SendOptions는 RPC 데이터를 송신 시, 송신 옵션으로 사용된다.
 
 [Properties]
 
-|SendParameters 용어|타입| 설명|
+|SendOptions 용어|타입| 설명|
 |---|---|---|
 |Channel|	byte|	송신 채널을 지정한다.|
-|Encrypted|	bool|	True 지정 시 데이터를 암호화 한다.|
+|IsEncrypted|	bool|	True 지정 시 데이터를 암호화 한다.|
 |QoS|	QosType|	송신 QoS를 지정한다.|
 
 ### ReceiverGroup
@@ -714,7 +714,6 @@ ReceiverGroup은 RPC 송신 시, 인자로 수신자를 지정한다. ReceiverGr
 |---|---|
 |UnreliableSequenced|	비 신뢰성-순서보장 전송. 게임 오브젝트의 좌표와 같이 지속해서 업데이트가 필요한 데이터의 경우에 적합하다.|
 |ReliableSequenced|	신뢰성-순서보장 전송. 간헐적 또는 일시적 데이터를 송신하기에 적합하다.|
-|AllCostDelivery|	신뢰성-순서보장-빠른 전송 ReliableSequenced 전송과 거의 유사하지만 빠른 재전송을 수행한다. 작은 데이터면서 중요한 데이터가 적합하다.|
 
 ## 주의 사항
 
