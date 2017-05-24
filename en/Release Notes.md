@@ -1,5 +1,10 @@
 ## Game > Real Time Multiplayer > Release Notes
 
+### 2017.05.25
+#### 기능 개선/변경
+* [Server] CCU 수집 버그 확인을 위한 로그 추가
+* [Server, SDK] RTO(Retransmission Timeout) 개선
+
 ### 2017.04.20
 #### 기능 개선/변경
 * [Server] 안정성 작업
