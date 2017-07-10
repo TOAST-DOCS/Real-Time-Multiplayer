@@ -1,5 +1,8 @@
 ## Game > Real Time Multiplayer > Release Notes
 
+### 2017.07.20
+* [Server] v1.0 서비스 종료
+
 ### 2017.05.25
 #### 기능 개선/변경
 * [Server] CCU 수집 버그 확인을 위한 로그 추가
