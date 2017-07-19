@@ -1,5 +1,11 @@
 ## Game > Real Time Multiplayer > Release Notes
 
+### 2017.07.20
+* [Server, SDK] v1.0 서비스 종료
+    * v1.0 서비스가 종료됨에 따라, v1.x SDK를 사용할 수 없습니다.
+    * v2.0 안내 및 SDK 적용에 대한 자세한 내용은 아래 공지를 확인해주시기 바랍니다.
+        * [[공지] Toast Cloud Real-Time Multiplayer v2 안내](https://cloud.toast.com/support/notice/detail/1453435858K00360)
+
 ### 2017.05.25
 #### 기능 개선/변경
 * [Server] CCU 수집 버그 확인을 위한 로그 추가
