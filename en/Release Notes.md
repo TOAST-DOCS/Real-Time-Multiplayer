@@ -1,5 +1,9 @@
 ## Game > Real Time Multiplayer > Release Notes
 
+### 2017.09.21
+* [SDK] Unity3D SDK v2.0.3 릴리즈
+    * API 서버의 정상적인 응답을 받아도 간헐적으로 게임서버 접속이 안 되는 버그 수정
+
 ### 2017.07.20
 * [Server, SDK] v1.0 서비스 종료
     * v1.0 서비스가 종료됨에 따라, v1.x SDK를 사용할 수 없습니다.
