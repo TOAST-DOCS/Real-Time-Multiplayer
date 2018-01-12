@@ -1,1 +1,1 @@
-## Game > Real-time Multiplayer > 오류 코드
+## Game > Real Time Multiplayer > 오류 코드
