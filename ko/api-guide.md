@@ -1,1 +1,1 @@
-## Game > Real-time Multiplayer > API 가이드
+## Game > Real Time Multiplayer > API 가이드
