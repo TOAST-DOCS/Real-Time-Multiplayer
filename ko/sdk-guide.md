@@ -1,1 +1,1 @@
-## Game > Real-time Multiplayer > SDK 사용 가이드
+## Game > Real Time Multiplayer > SDK 사용 가이드
