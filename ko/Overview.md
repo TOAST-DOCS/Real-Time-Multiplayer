@@ -1,1 +1,1 @@
-## Game > Real-time Multiplayer > 개요
+## Game > Real Time Multiplayer > 개요
